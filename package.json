@@ -22,7 +22,7 @@
         "@trivago/prettier-plugin-sort-imports": "^5.2.2",
         "cross-env": "^7.0.3",
         "graphql": "^16.8.1",
-        "next": "15.1.5",
+        "next": "15.1.6",
         "payload": "latest",
         "prettier-plugin-tailwindcss": "^0.6.11",
         "react": "19.0.0",
