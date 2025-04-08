@@ -230,16 +230,12 @@ export const ScheduleBlockClient: React.FC<ScheduleBlockClientProps> = ({
 										<h3 className="text-secondary-900 dark:text-secondary text-2xl font-semibold tracking-tight">
 											{day.name} - {formatDate(day.date)}
 										</h3>
-										<p className="text-secondary-900 dark:text-secondary-700 mt-1.5 text-base tracking-tight">
-											{day.sessions?.length}{" "}
-											{day.sessions?.length === 1 ? "session" : "sessions"}
-										</p>
 									</div>
 								</div>
 								<SessionsList
 									day={day}
 									formatTime={formatTime}
-									className="mt-10"
+									className="mt-8"
 									variants={itemVariants}
 								/>
 							</motion.section>
