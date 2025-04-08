@@ -1,6 +1,7 @@
 "use client";
 
-import type { Page, Conferencedetail } from "@/payload-types";
+import type { Page, Post, Conferencedetail } from "@/payload-types";
+import { cn } from "@/utilities/ui";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/16/solid";
 import { format } from "date-fns";
 import { motion } from "motion/react";
@@ -8,15 +9,37 @@ import { motion } from "motion/react";
 import { CMSLink } from "@/components/Link";
 import { Media } from "@/components/Media";
 
-// Fix the interface declaration
 interface HighImpactHeroProps {
   title: string;
   copy?: string | null;
+  conferenceDetails?: Conferencedetail;
   toggleConferenceDetails?: boolean | null;
+  announcementBarSettings?: {
+    toggleAnnouncementBar?: boolean | null;
+    customiseAnnouncementBar?: boolean | null;
+    customisationOptions?: {
+      announcementText?: string | null;
+      addImage?: boolean | null;
+      logo?: (string | null) | typeof Media;
+      link?: {
+        type?: ("reference" | "custom") | null;
+        newTab?: boolean | null;
+        reference?:
+        | ({
+          relationTo: "pages";
+          value: string | Page;
+        } | null)
+        | ({
+          relationTo: "posts";
+          value: string | Post;
+        } | null);
+        url?: string | null;
+      };
+    };
+  };
   links?: Page["hero"]["links"];
   media?: Page["hero"]["media"];
   type: "highImpact" | "mediumImpact" | "lowImpact" | "none";
-  conferenceDetails?: Conferencedetail;
 }
 
 export const HighImpactHero: React.FC<HighImpactHeroProps> = ({
@@ -26,6 +49,7 @@ export const HighImpactHero: React.FC<HighImpactHeroProps> = ({
   media,
   conferenceDetails,
   toggleConferenceDetails,
+  announcementBarSettings,
 }) => {
   // Format conference details
   let dateDisplay = "17-18 MARCH 2026"; // Default fallback
@@ -52,6 +76,19 @@ export const HighImpactHero: React.FC<HighImpactHeroProps> = ({
       venueDisplay = conferenceDetails.location.venueName;
     }
   }
+
+  const showAnnouncementBar =
+    announcementBarSettings && announcementBarSettings.toggleAnnouncementBar === false;
+
+  const useCustomAnnouncement =
+    showAnnouncementBar && announcementBarSettings.customiseAnnouncementBar === true;
+
+  const customOptions = useCustomAnnouncement
+    ? announcementBarSettings.customisationOptions
+    : null;
+
+  const hasLogo =
+    customOptions?.addImage && customOptions?.logo && typeof customOptions.logo === "object";
 
   return (
     <motion.header
@@ -168,41 +205,81 @@ export const HighImpactHero: React.FC<HighImpactHeroProps> = ({
               ))}
             </motion.ul>
           )}
-          <hr className="my-6 border-white opacity-50 lg:my-8" />
-          <motion.div
-            variants={{
-              hidden: { opacity: 0, y: 15 },
-              visible: {
-                opacity: 1,
-                y: 0,
-                transition: {
-                  type: "tween",
-                  duration: 0.5,
-                  ease: "easeOut",
-                },
-              },
-            }}
-            className="hidden sm:mb-8 sm:flex sm:justify-center"
-          >
-            <div className="relative flex items-center gap-4 rounded-full bg-white/10 px-5 py-3 text-sm/6 text-gray-100 ring-1 ring-white/20 backdrop-blur hover:ring-gray-100/20">
-              <span className="text-lg font-semibold tracking-wide">
-                Co-locating with AACS
-              </span>
-              <a
-                target="_blank"
-                href="https://aacs.org.au"
-                className="text-secondary-500 hover:text-secondary-600 group inline-flex items-start gap-1.5 font-semibold transition"
+
+          {showAnnouncementBar && (
+            <div>
+              <hr className="my-6 border-white opacity-50 lg:my-8" />
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 15 },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    transition: {
+                      type: "tween",
+                      duration: 0.5,
+                      ease: "easeOut",
+                    },
+                  },
+                }}
+                className="hidden sm:mb-8 sm:flex sm:justify-center"
               >
-                <img
-                  className="pointer-events-none inline-flex w-18 object-contain transition duration-300 group-hover:scale-[1.02]"
-                  src="/api/media/file/AACS_Connect26_Logo_WHITE-RED_RGB.png"
-                />
-                <span aria-hidden="true">
-                  <ArrowTopRightOnSquareIcon className="-mt-[2px] size-4" />
-                </span>
-              </a>
+                {useCustomAnnouncement && customOptions ? (
+                  <div
+                    className={cn(
+                      "relative flex items-center rounded-full bg-white/10 px-5 py-3 text-gray-100 ring-1 ring-white/20 backdrop-blur hover:ring-gray-100/20",
+                      hasLogo ? "gap-4 text-lg/8" : "gap-2 text-base/6"
+                    )}
+                  >
+                    {customOptions.announcementText && (
+                      <span>{customOptions.announcementText}</span>
+                    )}
+
+                    {customOptions.link && (
+                      <CMSLink
+                        {...customOptions.link}
+                        className="text-secondary-500 hover:text-secondary-600 group inline-flex items-start gap-1.5 font-semibold transition"
+                      >
+                        {hasLogo &&
+                          typeof customOptions.logo === "object" && (
+                            <div>
+                              <Media
+                                resource={customOptions.logo}
+                                imgClassName="pointer-events-none inline-flex w-18 object-contain"
+                              />
+                            </div>
+                          )}
+                        <span aria-hidden="true">
+                          <ArrowTopRightOnSquareIcon
+                            className={cn(
+                              hasLogo ? "-mt-[2px] size-3" : "size-5"
+                            )}
+                          />
+                        </span>
+                      </CMSLink>
+                    )}
+                  </div>
+                ) : (
+                  <div className="relative flex items-center gap-4 rounded-full bg-white/10 px-5 py-3 text-lg/6 text-gray-100 ring-1 ring-white/20 backdrop-blur hover:ring-gray-100/20">
+                    <span>Co-locating with</span>
+                    <a
+                      target="_blank"
+                      href="https://aacs.org.au"
+                      className="text-secondary-500 hover:text-secondary-600 group inline-flex items-start gap-1.5 font-semibold transition"
+                    >
+                      <img
+                        className="pointer-events-none inline-flex w-18 object-contain transition duration-300 group-hover:scale-[1.02]"
+                        src="/api/media/file/AACS_Connect26_Logo_WHITE-RED_RGB.png"
+                      />
+                      <span aria-hidden="true">
+                        <ArrowTopRightOnSquareIcon className="-mt-[2px] size-4" />
+                      </span>
+                    </a>
+                  </div>
+                )}
+              </motion.div>
             </div>
-          </motion.div>
+          )}
         </motion.div>
       </div>
       <div className="select-none">

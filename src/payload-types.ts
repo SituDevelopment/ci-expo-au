@@ -186,6 +186,32 @@ export interface Page {
         }[]
       | null;
     media?: (string | null) | Media;
+    /**
+     * The "Announcement Bar" is the small text & logo section beneath the Button Group.
+     */
+    announcementBarSettings?: {
+      toggleAnnouncementBar?: boolean | null;
+      customiseAnnouncementBar?: boolean | null;
+      customisationOptions?: {
+        announcementText?: string | null;
+        addImage?: boolean | null;
+        logo?: (string | null) | Media;
+        link?: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: string | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: string | Post;
+              } | null);
+          url?: string | null;
+        };
+      };
+    };
   };
   layout: (
     | ArchiveBlock
@@ -1159,6 +1185,27 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
             };
         media?: T;
+        announcementBarSettings?:
+          | T
+          | {
+              toggleAnnouncementBar?: T;
+              customiseAnnouncementBar?: T;
+              customisationOptions?:
+                | T
+                | {
+                    announcementText?: T;
+                    addImage?: T;
+                    logo?: T;
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                        };
+                  };
+            };
       };
   layout?:
     | T

@@ -78,7 +78,7 @@ export const GalleryBlockClient: React.FC<GalleryBlockClientProps> = ({
 						animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
 						transition={{ duration: 0.5 }}
 					>
-						<h2 className="font-display text-center text-2xl font-semibold tracking-wider text-neutral-800 sm:text-left">
+						<h2 className="text-center text-neutral-800 sm:text-left dark:text-neutral-300">
 							{galleryTitle}
 						</h2>
 						<div className="h-px flex-auto bg-neutral-200"></div>
