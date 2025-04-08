@@ -1,6 +1,6 @@
 "use client";
 
-import type { Page, Post, Conferencedetail } from "@/payload-types";
+import type { Page, Post, Conferencedetail, Media as MediaType } from "@/payload-types";
 import { cn } from "@/utilities/ui";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/16/solid";
 import { format } from "date-fns";
@@ -20,7 +20,7 @@ interface HighImpactHeroProps {
     customisationOptions?: {
       announcementText?: string | null;
       addImage?: boolean | null;
-      logo?: (string | null) | typeof Media;
+      logo?: (string | null) | MediaType;
       link?: {
         type?: ("reference" | "custom") | null;
         newTab?: boolean | null;
