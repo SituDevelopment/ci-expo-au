@@ -43,7 +43,7 @@
         "motion": "^12.4.7",
         "next": "^15.1.7",
         "next-sitemap": "^4.2.3",
-        "payload": "^3.24.0",
+        "payload": "^3.33.0",
         "postcss": "^8.5.3",
         "prettier-plugin-tailwindcss": "^0.6.11",
         "prism-react-renderer": "^2.4.1",
