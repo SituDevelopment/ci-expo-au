@@ -21,7 +21,6 @@ export const Schedule: CollectionConfig = {
 				{
 					name: "name",
 					type: "text",
-					required: true,
 				},
 				{
 					name: "date",

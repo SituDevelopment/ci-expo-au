@@ -179,12 +179,9 @@ export const ScheduleBlockClient: React.FC<ScheduleBlockClientProps> = ({
 													<Tab className="focus:outline-none">
 														<span className="absolute inset-0" />
 														<Calendar className="mr-2 inline-block h-5 w-5" />
-														{day.name} - {formatDate(day.date)}
+														{day.name && (<span>{day.name} </span>)}{formatDate(day.date)}
 													</Tab>
 												</h3>
-												<p className="text-secondary-900 mt-1.5 text-base tracking-tight">
-													{day.sessions?.length} sessions
-												</p>
 											</div>
 										</motion.div>
 									))}
@@ -228,7 +225,7 @@ export const ScheduleBlockClient: React.FC<ScheduleBlockClientProps> = ({
 									<Calendar className="text-secondary-500 h-5 w-5" />
 									<div>
 										<h3 className="text-secondary-900 dark:text-secondary text-2xl font-semibold tracking-tight">
-											{day.name} - {formatDate(day.date)}
+											{day.name && (<span>{day.name} </span>)} {formatDate(day.date)}
 										</h3>
 									</div>
 								</div>

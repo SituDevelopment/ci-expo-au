@@ -866,7 +866,7 @@ export interface Schedule {
   scheduleName?: string | null;
   days?:
     | {
-        name: string;
+        name?: string | null;
         date: string;
         sessions?:
           | {
