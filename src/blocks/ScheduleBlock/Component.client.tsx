@@ -10,7 +10,7 @@ interface ScheduleBlockClientProps {
 	scheduleData: {
 		scheduleName?: string | null;
 		days?: {
-			name: string;
+			name?: string;
 			date: string;
 			sessions?: {
 				title: string;
