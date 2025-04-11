@@ -29,6 +29,9 @@ export default buildConfig({
         importMap: {
             baseDir: path.resolve(dirname),
         },
+        timezones: {
+            defaultTimezone: 'Australia/Sydney',   
+        },
     },
     collections: [Pages, Posts, Categories, Media, Exhibitors, Sponsors, Schedule, Users],
     cors: [getServerSideURL()].filter(Boolean),

@@ -23,8 +23,15 @@ export const Schedule: CollectionConfig = {
 					type: "text",
 				},
 				{
+					name: "hideDayName",
+					type: "checkbox",
+					label: "Hide Day Name",
+					defaultValue: true,
+				},
+				{
 					name: "date",
 					type: "date",
+					timezone: true,
 					admin: {
 						date: {
 							displayFormat: "dd/MM/yyyy",
@@ -44,6 +51,7 @@ export const Schedule: CollectionConfig = {
 						{
 							name: "startTime",
 							type: "date",
+							timezone: true,
 							admin: {
 								date: {
 									pickerAppearance: "timeOnly",
@@ -54,6 +62,7 @@ export const Schedule: CollectionConfig = {
 						{
 							name: "endTime",
 							type: "date",
+							timezone: true,
 							admin: {
 								date: {
 									pickerAppearance: "timeOnly",

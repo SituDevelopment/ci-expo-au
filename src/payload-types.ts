@@ -867,12 +867,16 @@ export interface Schedule {
   days?:
     | {
         name?: string | null;
+        hideDayName?: boolean | null;
         date: string;
+        date_tz: SupportedTimezones;
         sessions?:
           | {
               title: string;
               startTime: string;
+              startTime_tz: SupportedTimezones;
               endTime: string;
+              endTime_tz: SupportedTimezones;
               subtitle?: string | null;
               description?: string | null;
               location?: string | null;
@@ -1500,13 +1504,17 @@ export interface ScheduleSelect<T extends boolean = true> {
     | T
     | {
         name?: T;
+        hideDayName?: T;
         date?: T;
+        date_tz?: T;
         sessions?:
           | T
           | {
               title?: T;
               startTime?: T;
+              startTime_tz?: T;
               endTime?: T;
+              endTime_tz?: T;
               subtitle?: T;
               description?: T;
               location?: T;
@@ -1877,7 +1885,9 @@ export interface Footer {
 export interface Conferencedetail {
   id: string;
   startDate: string;
+  startDate_tz: SupportedTimezones;
   endDate: string;
+  endDate_tz: SupportedTimezones;
   contactDetails?: {
     phone?: {
       generalEnquiries?: string | null;
@@ -1968,7 +1978,9 @@ export interface FooterSelect<T extends boolean = true> {
  */
 export interface ConferencedetailsSelect<T extends boolean = true> {
   startDate?: T;
+  startDate_tz?: T;
   endDate?: T;
+  endDate_tz?: T;
   contactDetails?:
     | T
     | {
