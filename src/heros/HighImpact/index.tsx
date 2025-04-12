@@ -151,15 +151,15 @@ export const HighImpactHero: React.FC<HighImpactHeroProps> = ({
                   },
                 },
               }}
-              className="mt-8 grid grid-cols-2 gap-x-10 gap-y-6 sm:mt-12 sm:gap-x-16 sm:gap-y-10 sm:text-center lg:auto-cols-auto lg:grid-flow-col lg:grid-cols-none lg:justify-center lg:text-center"
+              className="mt-8 grid gap-x-10 gap-y-6 sm:mt-12 sm:grid-cols-2 sm:gap-x-16 sm:gap-y-10 sm:text-center lg:auto-cols-auto lg:grid-flow-col lg:grid-cols-none lg:justify-center lg:text-center"
             >
-              <div>
+              <div className="flex items-baseline justify-center gap-3 sm:block">
                 <dt className="text-secondary-600 text-base">Dates</dt>
                 <dd className="mt-0.5 text-2xl font-semibold tracking-tight text-white">
                   {dateDisplay}
                 </dd>
               </div>
-              <div>
+              <div className="flex items-baseline justify-center gap-3 sm:block">
                 <dt className="text-secondary-600 text-base">Location</dt>
                 <dd className="mt-0.5 text-2xl font-semibold tracking-tight text-white">
                   {venueDisplay}
@@ -222,7 +222,7 @@ export const HighImpactHero: React.FC<HighImpactHeroProps> = ({
                     },
                   },
                 }}
-                className="hidden sm:mb-8 sm:flex sm:justify-center"
+                className="flex justify-center"
               >
                 {useCustomAnnouncement && customOptions ? (
                   <div

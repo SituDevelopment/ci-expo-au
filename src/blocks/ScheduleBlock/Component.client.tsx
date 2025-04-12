@@ -10,7 +10,7 @@ interface ScheduleBlockClientProps {
 	scheduleData: {
 		scheduleName?: string | null;
 		days?: {
-			name?: string;
+			name?: string | null;
 			date: string;
 			sessions?: {
 				title: string;
@@ -175,11 +175,16 @@ export const ScheduleBlockClient: React.FC<ScheduleBlockClientProps> = ({
 											}}
 										>
 											<div>
-												<h3 className="text-secondary-900 flex items-center text-2xl font-semibold tracking-tight">
-													<Tab className="focus:outline-none">
+												<h3 className="text-secondary-900 dark:text-secondary flex items-center text-2xl font-semibold tracking-tight">
+													<Tab className="flex items-center focus:outline-none">
 														<span className="absolute inset-0" />
 														<Calendar className="mr-2 inline-block h-5 w-5" />
-														{day.name && (<span>{day.name} </span>)}{formatDate(day.date)}
+														{day.name && (
+															<span className="border-right pr-2">
+																{day.name}
+															</span>
+														)}
+														{formatDate(day.date)}
 													</Tab>
 												</h3>
 											</div>
@@ -225,7 +230,8 @@ export const ScheduleBlockClient: React.FC<ScheduleBlockClientProps> = ({
 									<Calendar className="text-secondary-500 h-5 w-5" />
 									<div>
 										<h3 className="text-secondary-900 dark:text-secondary text-2xl font-semibold tracking-tight">
-											{day.name && (<span>{day.name} </span>)} {formatDate(day.date)}
+											{day.name && <span>{day.name} </span>}{" "}
+											{formatDate(day.date)}
 										</h3>
 									</div>
 								</div>
@@ -246,7 +252,7 @@ export const ScheduleBlockClient: React.FC<ScheduleBlockClientProps> = ({
 
 interface SessionsListProps {
 	day: {
-		name: string;
+		name?: string | null;
 		date: string;
 		sessions?: {
 			title: string;
