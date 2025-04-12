@@ -30,7 +30,12 @@ export default buildConfig({
             baseDir: path.resolve(dirname),
         },
         timezones: {
-            defaultTimezone: 'Australia/Sydney',   
+            defaultTimezone: "Australia/Sydney",
+        },
+        components: {
+            graphics: {
+                Logo: "/components/payload/Logo",
+            },
         },
     },
     collections: [Pages, Posts, Categories, Media, Exhibitors, Sponsors, Schedule, Users],
