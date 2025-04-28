@@ -5,6 +5,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { ExternalLink, MoveRight, X } from "lucide-react";
 import { motion } from "motion/react";
 import { useInView } from "motion/react";
+import Image from 'next/image'
 import React, { Fragment, useRef, useState } from "react";
 
 import { CMSLink } from "../../components/Link";
@@ -123,7 +124,7 @@ export const CollectionBlockClient: React.FC<CollectionBlockClientProps> = (prop
                                     typeof item.media === "object" &&
                                     "url" in item.media &&
                                     typeof item.media.url === "string" && (
-                                        <img
+                                        <Image
                                             onClick={() => openModal(item)}
                                             src={item.media.url}
                                             alt={
