@@ -124,17 +124,14 @@ export const CollectionBlockClient: React.FC<CollectionBlockClientProps> = (prop
                                     typeof item.media === "object" &&
                                     "url" in item.media &&
                                     typeof item.media.url === "string" && (
-                                        <Image
+                                        <img
                                             onClick={() => openModal(item)}
-                                            src={item.media.url}
+                                            src={"https://xv68fvhzsin6nptw.public.blob.vercel-storage.com/" + item.media.url.split("/").pop()}
                                             alt={
                                                 typeof item.media.alt === "string"
                                                     ? item.media.alt
                                                     : ""
                                             }
-                                            quality={40}
-                                            placeholder="blur"
-                                            loading="lazy"
                                             className="h-20 cursor-pointer self-start rounded-lg object-cover object-center ring ring-neutral-100 transition duration-300 hover:scale-105 dark:ring-neutral-700"
                                         />
                                     )}
