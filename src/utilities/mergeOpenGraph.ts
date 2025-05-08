@@ -11,7 +11,7 @@ const defaultOpenGraph: Metadata["openGraph"] = {
         },
     ],
     siteName: "C I Expo",
-    title: "Payload Website Template",
+    title: "C&I Expo",
 };
 
 export const mergeOpenGraph = (og?: Metadata["openGraph"]): Metadata["openGraph"] => {
