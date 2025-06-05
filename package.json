@@ -16,7 +16,7 @@
         "type": "cross-env NODE_OPTIONS=--no-deprecation tsc"
     },
     "dependencies": {
-        "@headlessui/react": "^2.2.0",
+        "@headlessui/react": "^2.2.4",
         "@heroicons/react": "^2.2.0",
         "@payloadcms/db-mongodb": "^3.20.0",
         "@payloadcms/live-preview-react": "^3.24.0",

@@ -93,7 +93,7 @@ export const GridBlockClient: React.FC<GridBlockProps> = (props) => {
     };
 
     return (
-        <div className="py-24 sm:py-32" id={`block-${id}`} ref={containerRef}>
+        <div className="py-24 sm:py-32" ref={containerRef}>
             <div className="container">
                 <motion.div
                     initial="hidden"

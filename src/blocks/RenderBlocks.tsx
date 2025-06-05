@@ -42,10 +42,10 @@ export const RenderBlocks: React.FC<{
 
                         if (Block) {
                             return (
-                                <div key={index}>
+                                <section key={index} id={block.id ? `block-${block.id}` : `block-${index}`}>
                                     {/* @ts-expect-error there may be some mismatch between the expected types here */}
                                     <Block key={index} {...block} disableInnerContainer />
-                                </div>
+                                </section>
                             );
                         }
                     }

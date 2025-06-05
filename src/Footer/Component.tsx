@@ -13,7 +13,7 @@ export async function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <div>
+        <footer>
             <div className="border-t border-neutral-200 bg-white px-4 py-4 sm:py-8 md:px-6 md:py-12 lg:px-8 lg:py-16 dark:border-neutral-700 dark:bg-neutral-800">
                 <div className="container">
                     <div className="grid grid-cols-6 justify-items-center gap-x-16 lg:grid-cols-12">
@@ -30,7 +30,7 @@ export async function Footer() {
                 </div>
             </div>
 
-            <footer className="mt-auto border-t border-neutral-200 dark:border-neutral-700 dark:bg-neutral-900 dark:text-white">
+            <div className="mt-auto border-t border-neutral-200 dark:border-neutral-700 dark:bg-neutral-900 dark:text-white">
                 <div className="container flex flex-col items-center gap-8 py-8 md:flex-row md:justify-between">
                     <Link className="flex items-center" href="/">
                         <Logo className="object-contain object-left" />
@@ -49,7 +49,7 @@ export async function Footer() {
                 <div className="container px-3 pt-6 pb-3 text-center opacity-75 lg:px-0 lg:text-left">
                     Copyright © {currentYear} C&I Expo. All rights reserved.
                 </div>
-            </footer>
-        </div>
+            </div>
+        </footer>
     );
 }

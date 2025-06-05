@@ -69,7 +69,7 @@ export const GalleryBlockClient: React.FC<GalleryBlockClientProps> = ({
     }
 
     return (
-        <div className="py-12 sm:py-20" id={`block-${id}`} ref={containerRef}>
+        <div className="py-12 sm:py-20" ref={containerRef}>
             <div className="container mx-auto">
                 {galleryTitle && (
                     <motion.div

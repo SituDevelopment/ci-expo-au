@@ -58,6 +58,52 @@ export const CollectionBlock: Block = {
             },
         },
         {
+            name: "layoutSettings",
+            label: "Layout Settings",
+            type: "group",
+            fields: [
+                {
+                    name: "columns",
+                    type: "select",
+                    label: "Number of Columns",
+                    defaultValue: "auto",
+                    options: [
+                        { label: "Auto (2 mobile / 6 desktop)", value: "auto" },
+                        { label: "1 Column", value: "1" },
+                        { label: "2 Columns", value: "2" },
+                        { label: "3 Columns", value: "3" },
+                        { label: "4 Columns", value: "4" },
+                        { label: "5 Columns", value: "5" },
+                        { label: "6 Columns", value: "6" },
+                    ],
+                },
+                {
+                    name: "imageSize",
+                    type: "select",
+                    label: "Logo Size",
+                    defaultValue: "medium",
+                    options: [
+                        { label: "Small", value: "small" },
+                        { label: "Medium", value: "medium" },
+                        { label: "Large", value: "large" },
+                        { label: "Extra Large", value: "extra-large" },
+                    ],
+                },
+                {
+                    name: "alignment",
+                    type: "select",
+                    label: "Content Alignment",
+                    defaultValue: "start",
+                    options: [
+                        { label: "Start", value: "start" },
+                        { label: "Center", value: "center" },
+                        { label: "End", value: "end" },
+                        { label: "Space Between", value: "between" },
+                    ],
+                },
+            ],
+        },
+        {
             name: "enableLink",
             type: "checkbox",
         },

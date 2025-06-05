@@ -58,7 +58,6 @@ export const ConferenceDetailsBlockClient: React.FC<ConferenceDetailsBlockClient
     return (
         <section
             className="my-16 rounded-[4rem] bg-white py-20 ring ring-neutral-200 sm:py-32 dark:bg-neutral-800 dark:ring-neutral-700"
-            id={`block-${id}`}
             ref={containerRef}
         >
             <div className="container mx-auto px-6 lg:px-8">

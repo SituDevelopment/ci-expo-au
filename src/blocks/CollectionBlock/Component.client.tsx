@@ -1,6 +1,7 @@
 "use client";
 
 import type { Exhibitor, Sponsor } from "@/payload-types";
+import { cn } from "@/utilities/ui";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExternalLink, MoveRight, X } from "lucide-react";
 import { motion } from "motion/react";
@@ -25,11 +26,23 @@ interface CollectionBlockClientProps {
     link?: Record<string, any> | null;
     blockType: "collectionBlock";
     items: (Exhibitor | Sponsor)[];
+    columns?: string | null;
+    imageSize?: string | null;
+    alignment?: string | null;
 }
 
 export const CollectionBlockClient: React.FC<CollectionBlockClientProps> = (props) => {
     // Defensive destructuring with defaults
-    const { id = undefined, title = null, enableLink = false, link = null, items = [] } = props;
+    const {
+        id = undefined,
+        title = null,
+        enableLink = false,
+        link = null,
+        items = [],
+        columns = "auto",
+        imageSize = "medium",
+        alignment = "start",
+    } = props;
     const containerRef = useRef(null);
     const isInView = useInView(containerRef, { once: true, amount: 0.2 });
 
@@ -39,7 +52,6 @@ export const CollectionBlockClient: React.FC<CollectionBlockClientProps> = (prop
 
     // Safety check for items array
     if (!Array.isArray(items)) {
-        console.error("Expected items to be an array, got:", items);
         return null;
     }
 
@@ -55,6 +67,64 @@ export const CollectionBlockClient: React.FC<CollectionBlockClientProps> = (prop
     // Function to close modal
     const closeModal = () => {
         setIsOpen(false);
+    };
+
+    // Determine grid columns class
+    const getGridColumnsClass = () => {
+        if (columns === "auto") {
+            // Auto-adjust based on number of items
+            if (items.length === 1) return "grid-cols-1";
+            if (items.length === 2) return "grid-cols-2";
+            if (items.length === 3) return "grid-cols-1 sm:grid-cols-3";
+            if (items.length <= 4) return "grid-cols-2 lg:grid-cols-4";
+            return "grid-cols-2 sm:grid-cols-3 lg:grid-cols-6"; // Default for many items
+        }
+
+        // Manual column settings with responsive behavior
+        const columnMap = {
+            "1": "grid-cols-1",
+            "2": "grid-cols-1 sm:grid-cols-2",
+            "3": "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
+            "4": "grid-cols-2 lg:grid-cols-4",
+            "5": "grid-cols-2 sm:grid-cols-3 lg:grid-cols-5",
+            "6": "grid-cols-2 sm:grid-cols-3 lg:grid-cols-6",
+        };
+
+        return (
+            columnMap[columns as keyof typeof columnMap] ||
+            "grid-cols-2 sm:grid-cols-3 lg:grid-cols-6"
+        );
+    };
+
+    // Determine alignment classes for grid container
+    const getAlignmentClass = () => {
+        const alignmentMap = {
+            start: "justify-items-start",
+            center: "justify-items-center",
+            end: "justify-items-end",
+            between: "justify-items-stretch",
+        };
+
+        return alignmentMap[alignment as keyof typeof alignmentMap] || "justify-items-start";
+    };
+
+    // Image size classes
+    const imageSizeMap = {
+        "small": "h-16", // 64px
+        "medium": "h-20", // 80px
+        "large": "h-28", // 112px
+        "extra-large": "h-36", // 144px
+    };
+
+    // Container width for single/featured items
+    const getContainerClass = () => {
+        if (items.length === 1 && columns === "auto") {
+            return "max-w-md mx-auto"; // Constrain width for single items
+        }
+        if (items.length <= 3 && columns === "auto") {
+            return "max-w-4xl mx-auto"; // Constrain width for 2-3 items
+        }
+        return "";
     };
 
     /*
@@ -93,14 +163,13 @@ export const CollectionBlockClient: React.FC<CollectionBlockClientProps> = (prop
     return (
         <div
             className="my-16 rounded-[4rem] bg-white py-20 ring ring-neutral-200 sm:py-32 dark:bg-neutral-800 dark:ring-neutral-700"
-            id={`block-${id}`}
             ref={containerRef}
         >
             <div className="container mx-auto px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl lg:max-w-none">
                     {title && (
                         <motion.div
-                            className="flex items-center gap-x-8"
+                            className="flex flex-col items-center gap-x-8"
                             initial={{ opacity: 0, y: -10 }}
                             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
                             transition={{ duration: 0.5 }}
@@ -111,32 +180,43 @@ export const CollectionBlockClient: React.FC<CollectionBlockClientProps> = (prop
                             <div className="h-px flex-auto bg-neutral-200 dark:bg-neutral-700"></div>
                         </motion.div>
                     )}
-                    <motion.div
-                        className="mt-12 grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 lg:grid-cols-6"
-                        variants={containerVariants}
-                        initial="hidden"
-                        animate={isInView ? "show" : "hidden"}
-                    >
-                        {items.map((item) => (
-                            <motion.div key={item.id} variants={itemVariants}>
-                                {item.media &&
-                                    typeof item.media === "object" &&
-                                    "url" in item.media &&
-                                    typeof item.media.url === "string" && (
-                                        <img
-                                            onClick={() => openModal(item)}
-                                            src={item.media.url}
-                                            alt={
-                                                typeof item.media.alt === "string"
-                                                    ? item.media.alt
-                                                    : ""
-                                            }
-                                            className="h-20 cursor-pointer self-start rounded-lg object-cover object-center ring ring-neutral-100 transition duration-300 hover:scale-105 dark:ring-neutral-700"
-                                        />
-                                    )}
-                            </motion.div>
-                        ))}
-                    </motion.div>
+                    <div className={cn("mt-12", getContainerClass())}>
+                        <motion.div
+                            className={cn(
+                                "grid gap-x-8 gap-y-10",
+                                getGridColumnsClass(),
+                                getAlignmentClass()
+                            )}
+                            variants={containerVariants}
+                            initial="hidden"
+                            animate={isInView ? "show" : "hidden"}
+                        >
+                            {items.map((item) => (
+                                <motion.div key={item.id} variants={itemVariants}>
+                                    {item.media &&
+                                        typeof item.media === "object" &&
+                                        "url" in item.media &&
+                                        typeof item.media.url === "string" && (
+                                            <img
+                                                onClick={() => openModal(item)}
+                                                src={item.media.url}
+                                                alt={
+                                                    typeof item.media.alt === "string"
+                                                        ? item.media.alt
+                                                        : ""
+                                                }
+                                                className={cn(
+                                                    imageSizeMap[
+                                                    imageSize as keyof typeof imageSizeMap
+                                                    ] || imageSizeMap.medium,
+                                                    "cursor-pointer self-start rounded-lg object-cover object-center ring ring-neutral-100 transition duration-300 hover:scale-105 dark:ring-neutral-700"
+                                                )}
+                                            />
+                                        )}
+                                </motion.div>
+                            ))}
+                        </motion.div>
+                    </div>
                     {enableLink && link && (
                         <motion.div
                             initial={{ opacity: 0 }}

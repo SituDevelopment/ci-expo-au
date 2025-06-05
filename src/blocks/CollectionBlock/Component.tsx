@@ -16,6 +16,7 @@ export async function CollectionBlock(props: CollectionBlockProps & { id?: strin
         enableLink,
         link,
         blockType,
+        layoutSettings,
     } = props;
 
     const limit = limitFromProps || 9000;
@@ -61,6 +62,9 @@ export async function CollectionBlock(props: CollectionBlockProps & { id?: strin
             collectionSelect={collectionSelect}
             displayMode={displayMode}
             blockType={blockType}
+            columns={layoutSettings?.columns}
+            imageSize={layoutSettings?.imageSize}
+            alignment={layoutSettings?.alignment}
         />
     );
 }
